@@ -1,0 +1,17 @@
+
+    <p-menubar [model]="items" >
+        <ng-template pTemplate="start">
+            <a routerLink="/home">
+                <img class="flex align-center" src="https://www.syma.com.br/skin/frontend/syma/2018/images/logo.png" alt="SymaLogo" height="70" width="200">
+            </a>
+        </ng-template>
+        <ng-template pTemplate="item" let-item>
+            <a class="flex align-items-center p-menuitem-link">
+                <span [class]="item.icon"></span>
+                <span class="ml-2">{{ item.label }}</span>           
+            </a>
+        </ng-template>
+        <ng-template pTemplate="end">
+                       
+        </ng-template>
+    </p-menubar>

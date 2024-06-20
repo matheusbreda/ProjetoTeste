@@ -1,0 +1,96 @@
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+
+                    <h1 class="mt-4">Venda</h1>
+
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">Consulta</li>
+                    </ol>
+
+                    <div class="container">
+
+                        <div class="row">
+
+                            <nav>
+                                <button class="btn btn-warning" (click)="novoCadastro()">
+                                    <i class="fa fa-plus"></i> Novo
+                                </button>
+                            </nav>
+
+                            <div class="col-md-12">
+                                <div class="alert alert-success" role="alert" *ngIf="mensagemSucesso">
+                                    {{mensagemSucesso}}
+                                </div>
+
+                                <div class="alert alert-danger" role="alert" *ngIf="mensagemErro">
+                                    {{mensagemErro}}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Data</th>
+                                                <th>Cliente</th>
+                                                <th>Valor Total</th>                                                
+                                                <th>Opções</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let venda of vendaLista">
+                                                <td>{{venda.id}}</td>
+                                                <td>{{venda.data}}</td>
+                                                <td>{{venda.cliente.nome}}</td>
+                                                <td>{{venda.valorTotal}}</td>                                                
+                                                <td>
+                                                    <button class="btn btn-primary"
+                                                        routerLink="/venda/form/{{ venda.id }}">
+                                                        <i class="fa fa-pen-square"></i>
+                                                    </button>
+                                                    <button class="btn btn-danger ml-1" (click)="adicionaSelecionado(venda)"
+                                                        data-toggle="modal" data-target="#modalExclusao">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div id="modalExclusao" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4>Confirmação</h4>
+                                        </div>
+                                        <div class="modal-body" *ngIf="vendaSelecionado">
+                                            <strong>Confirma a exclusão desta Venda:</strong> <br>
+                                            <strong>ID: </strong>{{ vendaSelecionado.id }} <br>
+                                            <strong>Data: </strong>{{vendaSelecionado.data}} <br>
+                                            <strong>Cliente: </strong>{{vendaSelecionado.cliente.nome}} <br>
+                                            <strong>Valor Total: </strong>{{vendaSelecionado.valorTotal}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-success" (click)="deletar()"
+                                                data-dismiss="modal">Confirmar </button>
+                                            <button class="btn btn-default" data-dismiss="modal">Cancela</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

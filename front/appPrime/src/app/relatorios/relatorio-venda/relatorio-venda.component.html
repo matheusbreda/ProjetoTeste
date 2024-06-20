@@ -1,0 +1,72 @@
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+
+                    <h1 class="mt-4">Relatório de Vendas</h1>
+
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">Consulta</li>
+                    </ol>
+
+
+
+                    <div class="container">
+
+                        <div class="row">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Filtro de cidade:</label>
+                                    <select              
+                                        class="form-control"  
+                                        [(ngModel)]="filtro">
+                                        <option value="">Todos</option>                                          
+                                        <option *ngFor= "let cidade of cidadeLista" [ngValue]= "cidade.nome">
+                                            {{ cidade.nome }}
+                                        </option>                                                                               
+                                    </select>
+
+                                    <table class="table table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Data</th>
+                                                <th>Cliente</th>
+                                                <th>Cidade</th>
+                                                <th>Valor</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let venda of vendaLista | tabelaFiltro: filtro">
+                                                <td>{{venda.id}}</td>
+                                                <td>{{venda.data}}</td>
+                                                <td>{{venda.cliente.nome}}</td>
+                                                <td>{{venda.cliente.cidade.nome}}</td>
+                                                <td>{{venda.valorTotal}}</td>                                               
+                                            </tr>
+                                            
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Valor Total</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th>
+                                                    <span>{{atualizaTotal()}}</span>
+                                                    {{valorTotalCalculado}}
+                                                </th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

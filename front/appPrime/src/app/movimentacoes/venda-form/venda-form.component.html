@@ -1,0 +1,375 @@
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+
+                    <h1 class="mt-4 ml-5">Venda </h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active ml-5">{{venda.id ? 'Edição' : 'Cadastro'}}</li>
+                    </ol>
+
+                    <div class="container ml-5">
+
+                        <form #vendaForm="ngForm" (ngSubmit)="onSubmit()">
+
+                            <div class="row">
+                                <div class="col-md-3" >
+                                    <button type="submit" class="btn btn-success" *ngIf="!venda.id">
+                                        <i class="fa fa-save"></i> Salvar
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" *ngIf="venda.id">
+                                        <i class="fa fa-sync-alt"></i> Alterar
+                                    </button>
+                                    <button type="button" class="btn btn-danger ml-1" (click)="voltarParaListagem()">
+                                        <i class="fa fa-arrow-alt-circle-left"></i> Voltar
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-success" role="alert" *ngIf="success === true">
+                                        Venda salvo/atualizado com sucesso!
+                                    </div>
+                                    <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                                        {{erro}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" *ngIf="venda.id">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>ID:</label>
+                                        <input type="text" class="form-control" disabled="true" [(ngModel)]="venda.id"
+                                            name="id">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Data: </label>
+                                        <input type="text" class="form-control" [(ngModel)]="venda.data" name="data">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Cliente: </label>
+                                        <select class="form-control" [ngModelOptions]="{standalone: true}"
+                                            [(ngModel)]="venda.cliente">
+                                            <option *ngFor="let cliente of clienteLista" [ngValue]="cliente">
+                                                {{ cliente.nome }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Valor Total: </label>
+                                        <input type="text" class="form-control" disabled="true" [(ngModel)]="venda.valorTotal"
+                                            name="valorTotal">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+                    
+                        </form>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <div>
+                                        <button class="btn btn-success" data-toggle="modal"
+                                            data-target="#modalLancarProdutos">
+                                            <i class="fa fa-save"></i> Inserir Produto
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div>
+                                        <button class="btn btn-success" data-toggle="modal"
+                                            data-target="#modalLancarPagamento">
+                                            <i class="fa fa-save"></i> Inserir Pagamento
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Produtos</label>
+                                    <label>=============================================================================================</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row ml-1">
+                            <div class="col-md-12 ml-1">
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Produto</th>
+                                            <th>Quantidade</th>
+                                            <th>V. Unit.</th>
+                                            <th>V. Tot.</th>
+                                            <th>Opções</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor= "let item of vendaItemLista">
+                                            <td>{{ item.id }}</td>
+                                            <td>{{ item.produto.id }} - {{item.produto.descricao }}</td>
+                                            <td>{{ item.quantidade }}</td>
+                                            <td>{{ item.valorUnitario}}</td>
+                                            <td>{{ item.valorTotal }}</td>
+                                            <td>                                          
+                                                <button class="btn btn-danger" (click)= "enviaItemExcluir(item)"
+                                                    data-toggle="modal" data-target="#modalDelecaoProduto">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>=============================================================================================</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Pagamentos</label>
+                                    <label>=============================================================================================</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row ml-1">
+                            <div class="col-md-12 ml-1">
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Parcela</th>
+                                            <th>Valor</th>
+                                            <th>Vencimento</th>
+                                            <th>Opções</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor= "let item of contasReceberLista">
+                                            <td>{{ item.id }}</td>
+                                            <td>{{ item.nrParcela }}</td>
+                                            <td>{{ item.valorParcela }}</td>
+                                            <td>{{ item.dataVencimneto}}</td>
+                                            <td>                                          
+                                                <button class="btn btn-danger" (click)= "excluirParcelas()"
+                                                    data-toggle="modal" data-target="#modalDelecaoProduto">
+                                                    <i class="fa fa-trash"></i>
+                                                </button> 
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>=============================================================================================</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="modalExclusao" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>Confirmação</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="modalLancarProdutos" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>Lançar Produto</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Produto: </label>
+                                                    <select class="form-control" [ngModelOptions]="{standalone: true}"
+                                                        [(ngModel)]="produto">
+                                                        <option *ngFor="let produto of produtoLista"
+                                                            [ngValue]="produto">
+                                                            {{ produto.descricao }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Tabela de Preço: </label>
+                                                    <select 
+                                                        class="form-control" 
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        (ngModelChange)="calculaValorProduto($event)"
+                                                        [(ngModel)]="tabelaPreco">
+                                                        <option *ngFor= "let tabelaPreco of tabelaPrecoLista" [ngValue]= "tabelaPreco">
+                                                            {{ tabelaPreco.descricao }}
+                                                        </option>
+                                                    </select>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Quantidade: </label>
+                                                    <input type="number" class="form-control"
+                                                        [(ngModel)]="vendaItemSelecionado.quantidade" 
+                                                        (ngModelChange)="calcularTotalProduto()"
+                                                        name="quantidade">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Valor Unitário: </label>
+                                                    <input type="text" class="form-control" disabled="true"
+                                                        [(ngModel)]="vendaItemSelecionado.valorUnitario"
+                                                        name="valorUnitario">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Valor Total: </label>
+                                                    <input type="text" class="form-control" disabled="true"
+                                                        [(ngModel)]="vendaItemSelecionado.valorTotal"
+                                                        name="valorTotalItem">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>    
+
+                                    <div class="modal-footer">
+                                        <button class="btn btn-success" data-dismiss="modal"
+                                            (click)="lancaProduto()">Confirmar </button>
+                                        <button class="btn btn-default" data-dismiss="modal">Cancela</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div> 
+
+                        <div id="modalLancarPagamento" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>Lançar Pagamento</h4>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Qt Parcelas: </label>
+                                                    <input type="text" class="form-control"
+                                                        [(ngModel)]="qtParcela" 
+                                                        (ngModelChange)="atualizaParcela()"
+                                                        name="qtParcela">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Valor Parcela: </label>
+                                                    <input type="number" class="form-control" disabled="true"
+                                                        [(ngModel)]="valorParcela"
+                                                        name="valorParcela">
+                                                </div>
+                                            </div> 
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Valor Total: </label>
+                                                    <input type="number" class="form-control" disabled="true"
+                                                        [(ngModel)]="valorTotalParcela"
+                                                        name="valorTotalParcela">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Primeiro Vencimento: </label>
+                                                    <input type="text" class="form-control"
+                                                        [(ngModel)]="primeiroVencimento"
+                                                        name="primeiroVencimento">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>    
+
+                                    <div class="modal-footer">
+                                        <button class="btn btn-success" data-dismiss="modal"
+                                            (click)="lancarParcela()">Confirmar </button>
+                                        <button class="btn btn-default" data-dismiss="modal">Cancela</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

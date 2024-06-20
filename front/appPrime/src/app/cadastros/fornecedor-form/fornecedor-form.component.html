@@ -1,0 +1,106 @@
+<div class="content-wrapper">
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-12">
+  
+            <h1 class="mt-2 ml-5">Fornecedor </h1>
+            <ol class="breadcrumb mb-2">
+              <li class="breadcrumb-item active ml-5">{{fornecedor.id ? 'Edição' : 'Cadastro'}}</li>
+            </ol>
+  
+            <div class="container ml-5">
+  
+              <form #clienteForm="ngForm" (ngSubmit)="onSubmit()">
+  
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="alert alert-success" role="alert" *ngIf="success === true">
+                      Cliente salvo/atualizado com sucesso!
+                    </div>
+                    <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
+                      {{erro}}
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="row" *ngIf="fornecedor.id">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>ID:</label>
+                      <input type="text" class="form-control" disabled="true" [(ngModel)]="fornecedor.id" name="id">
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Nome: </label>
+                      <input type="text" class="form-control" [(ngModel)]="fornecedor.nome" name="nome">
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Endereço: </label>
+                      <input type="text" class="form-control" [(ngModel)]="fornecedor.endereco" name="endereco">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>CNPJ: </label>
+                        <input type="text" class="form-control" [(ngModel)]="fornecedor.cnpj" name="cnpj">
+                      </div>
+                    </div>
+                  </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Cidade: </label>
+                        <select class="form-control" [ngModelOptions]="{standalone: true}"  [(ngModel)]="fornecedor.cidade"  >
+                          <option *ngFor="let cidade of cidadeLista"
+                              [ngValue]="cidade">
+                              {{ cidade.nome }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                </div>
+  
+                <div class="row">
+                  <div class="col-md-3">
+  
+                    <button type="submit" class="btn btn-success" *ngIf="!fornecedor.id">
+                      <i class="fa fa-save"></i>Salvar
+                    </button>
+  
+                    <button type="submit" class="btn btn-primary" *ngIf="fornecedor.id">
+                      <i class="fa fa-sync-alt"></i>Alterar
+                    </button>
+  
+                    <button type="button" class="btn btn-danger ml-1" (click)="voltarParaListagem()">
+                      <i class="fa fa-arrow-alt-circle-left"></i>Voltar
+                    </button>
+  
+                  </div>
+                </div>
+  
+  
+  
+              </form>
+  
+  
+            </div>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
