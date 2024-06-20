@@ -14,7 +14,9 @@ public class VendaCidadeDTO {
 	
 	@Id
 	private String cidade;  
-	private String sum;
+	private String produto;
+	private String valor;
+	
 	
         
 }

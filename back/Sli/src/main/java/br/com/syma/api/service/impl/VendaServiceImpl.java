@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import br.com.syma.api.model.Venda;
-import br.com.syma.api.repository.VendaItensRepository;
 import br.com.syma.api.repository.VendaRepository;
 import br.com.syma.api.responses.Response;
 import br.com.syma.api.service.VendaService;
@@ -20,9 +19,6 @@ public class VendaServiceImpl implements VendaService{
 	
 	@Autowired
 	private VendaRepository repository;
-	
-	@Autowired
-	private VendaItensRepository vendaItensRepository;
 
 	@Override
 public ResponseEntity<Response<Venda>> salvar(@Valid Venda venda, BindingResult result) {

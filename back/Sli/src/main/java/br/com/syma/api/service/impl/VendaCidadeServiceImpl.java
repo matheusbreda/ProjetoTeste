@@ -39,12 +39,14 @@ public class VendaCidadeServiceImpl implements VendaCidadeService {
 		
 		return listResult;*/  
     	
-    	String nativeQuery = "select cidade, sum(valor_total) from\r\n"
-    			+ "(select c.nome cliente, v.valor_total, c2.nome cidade from  venda v \r\n"
-    			+ "  inner join cliente c on v.id_cliente = c.id\r\n"
+    	String nativeQuery = "select  produto, cidade, sum(valor_total) valor from\r\n"
+    			+ "(select  p.descricao  produto, v.valor_total, c2.nome cidade from venda_itens v \r\n"
+    			+ "  inner join produto p on v.id_produto = p.id \r\n"
+    			+ "  inner join venda v2 on v.id_venda  = v2.id \r\n"
+    			+ "  inner join cliente c on v2.id_cliente  = c.id\r\n"
     			+ "  inner join cidade c2 on c.id_cidade  = c2.id \r\n"
     			+ "  order by c2.id) \r\n"
-    			+ "  group by cidade;"
+    			+ "  group by produto, cidade;"
     			;
     	
     	Query query = em.createNativeQuery(nativeQuery, VendaCidadeDTO.class);
