@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Built-By: Matheus
+Build-Jdk: 17.0.11
+Implementation-Title: jframe
+Implementation-Version: 1.001$-{activemq.version}
+Implementation-Vendor-Id: br.com.syma.jframe
+Implementation-URL: http://www.syma.com.br
+Created-By: Maven Integration for Eclipse
+

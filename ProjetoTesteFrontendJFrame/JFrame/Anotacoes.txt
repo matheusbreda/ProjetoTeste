@@ -1,0 +1,9 @@
+mvn clean compile exec:java
+mvn package
+
+mvn install:install-file -Dfile=CIDBio-1.0.0.jar -DgroupId=CIDBio -DartifactId=CIDBio -Dversion=1.0 -Dpackaging=jar
+
+
+rtsp://admin:Ewqiop321@192.168.55.50:554/Streaming/tracks/101/?starttime=20230413T080015Z&endtime=20230413T081008Z&name=00000004667000100&size=800600
+
+"Nao saiu" a mais de 24 horas dar baixa manual
